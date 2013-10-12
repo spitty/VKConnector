@@ -1,8 +1,6 @@
 package org.spitty.vkconnector.example;
 
 import com.google.gson.Gson;
-import java.io.IOException;
-import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spitty.vkconnector.api.VKAuth;
@@ -11,28 +9,30 @@ import org.spitty.vkconnector.gson.GsonHelper;
 import org.spitty.vkconnector.gson.Response;
 import org.spitty.vkconnector.gson.User;
 
+import java.io.IOException;
+import java.util.Arrays;
+
 /**
- *
  * @author spitty
  */
-public class Test {
+public class ObjectOrientedApp {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Test.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ObjectOrientedApp.class);
 
     public static void main(String[] args) throws IOException {
         VKAuth auth = new VKAuth("3913198", "", "");
         {
             VKMethod getUsers = new VKMethod("users.get", auth);
             String users = getUsers.addParam("uids", "1").addParam("uids", auth.getUserID()).execute();
-            LOGGER.debug("Users respons in JSON: {}", users);
+            LOGGER.debug("Users response in JSON: {}", users);
             Gson gson = new Gson();
             Response usersResult = gson.fromJson(users, Response.class);
             if (usersResult.getError() != null) {
                 String errorMessage = usersResult.getError().getErrorMessage();
-                LOGGER.error("Error has occured during executiong {}", getUsers, errorMessage);
+                LOGGER.error("Error has occurred during execution {}", getUsers, errorMessage);
                 throw new IllegalArgumentException(errorMessage);
             }
-            System.out.println("Get inforation about next users:");
+            System.out.println("Get information about next users:");
             System.out.println(Arrays.asList(usersResult.getResponse()).toString());
         }
         {
@@ -42,7 +42,7 @@ public class Test {
             Response friendsResponse = GsonHelper.convertJsonToResponse(friends);
             if (friendsResponse.getError() != null) {
                 String errorMessage = friendsResponse.getError().getErrorMessage();
-                LOGGER.error("Error has occured during executiong {}", getFriends, errorMessage);
+                LOGGER.error("Error has occurred during execution {}", getFriends, errorMessage);
                 throw new IllegalArgumentException(errorMessage);
             }
             System.out.println("Friends:");

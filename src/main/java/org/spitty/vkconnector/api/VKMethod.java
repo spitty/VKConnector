@@ -1,10 +1,11 @@
 package org.spitty.vkconnector.api;
 
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
 
 /**
  * Instances of {@link VKMethod} contain method name and parameters to pass
@@ -13,9 +14,9 @@ import org.jsoup.Jsoup;
  */
 public class VKMethod {
 
-    String methodName;
-    VKAuth auth;
-    Map<String, String> params;
+    private String methodName;
+    private VKAuth auth;
+    private Map<String, String> params;
 
     public VKMethod(String methodName, VKAuth auth) {
         this.methodName = methodName;
