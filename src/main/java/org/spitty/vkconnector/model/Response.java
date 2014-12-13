@@ -1,4 +1,4 @@
-package org.spitty.vkconnector.gson;
+package org.spitty.vkconnector.model;
 
 /**
  * Simple POJO. It represents JSON response

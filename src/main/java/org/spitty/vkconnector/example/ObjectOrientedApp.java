@@ -5,9 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spitty.vkconnector.api.VKAuth;
 import org.spitty.vkconnector.api.VKMethod;
-import org.spitty.vkconnector.gson.GsonHelper;
-import org.spitty.vkconnector.gson.Response;
-import org.spitty.vkconnector.gson.User;
+import org.spitty.vkconnector.util.JsonUtils;
+import org.spitty.vkconnector.model.Response;
+import org.spitty.vkconnector.model.User;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -20,7 +20,10 @@ public class ObjectOrientedApp {
     private static final Logger LOGGER = LoggerFactory.getLogger(ObjectOrientedApp.class);
 
     public static void main(String[] args) throws IOException {
-        VKAuth auth = new VKAuth("3913198", "", "");
+        final String accessToken = System.getProperty("app_id");
+        final String userId = System.getProperty("app_id");
+
+        VKAuth auth = new VKAuth(accessToken, userId);
         {
             VKMethod getUsers = new VKMethod("users.get", auth);
             String users = getUsers.addParam("uids", "1").addParam("uids", auth.getUserID()).execute();
@@ -39,7 +42,7 @@ public class ObjectOrientedApp {
             VKMethod getFriends = new VKMethod("friends.get", auth);
             String friends = getFriends.addParam("uid", auth.getUserID()).addParam("fields", "first_name").addParam("fields", "last_name").execute();
             LOGGER.debug("Friends response in JSON: {}", friends);
-            Response friendsResponse = GsonHelper.convertJsonToResponse(friends);
+            Response friendsResponse = JsonUtils.convertJsonToResponse(friends);
             if (friendsResponse.getError() != null) {
                 String errorMessage = friendsResponse.getError().getErrorMessage();
                 LOGGER.error("Error has occurred during execution {}", getFriends, errorMessage);
